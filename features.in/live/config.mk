@@ -13,7 +13,7 @@ _OFF = anacron blk-availability bridge clamd dhcpd dmeventd dnsmasq \
 # copy stage2 as live
 # NB: starts to preconfigure but doesn't use/cleanup yet
 use/live: use/stage2 sub/rootfs@live sub/stage2@live \
-	use/services/lvm2-disable
+	use/services/lvm2-disable use/cleanup
 	@$(call add_feature)
 	@$(call add,LIVE_PACKAGES,livecd-no-ldconfig-service)
 	@$(call add,DEFAULT_SERVICES_ENABLE,$(_ON))
@@ -37,8 +37,8 @@ use/live/base: use/live/.base use/net use/deflogin/live \
 use/live/rw: use/live use/syslinux/live_rw.cfg use/grub/live_rw.cfg; @:
 
 # graphical target (not enforcing xorg drivers or blobs)
-use/live/x11: use/live/base use/deflogin/desktop use/x11-autologin use/sound \
-	use/fonts/otf/adobe use/fonts/otf/mozilla +efi
+use/live/x11: use/live/base use/deflogin/desktop use/x11-autologin \
+	use/sound use/l10n
 	@$(call add,LIVE_LISTS,$(call tags,desktop && (live || network)))
 	@$(call add,LIVE_LISTS,$(call tags,base l10n))
 	@$(call add,LIVE_PACKAGES,pciutils)
@@ -46,13 +46,14 @@ use/live/x11: use/live/base use/deflogin/desktop use/x11-autologin use/sound \
 # this target specifically pulls free xorg drivers in (and a few more bits);
 # a browser is requested too, the recommended one can be overridden downstream
 use/live/desktop: use/live/x11 use/x11/xorg use/x11/wacom \
-	use/l10n use/xdg-user-dirs/deep \
+	use/xdg-user-dirs/deep \
 	use/syslinux/localboot.cfg use/grub/localboot_bios.cfg +vmguest; @:
 
 # preconfigure apt for both live and installed-from-live systems
 use/live/repo: use/live
 	@$(call try,LIVE_REPO,http/alt)
 	@$(call xport,LIVE_REPO)
+	@$(call add,CLEANUP_LIVE_PACKAGES,livecd-main-repo)
 
 # preconfigure apt in runtime (less reliable)
 use/live/repo/online:
@@ -101,11 +102,8 @@ endif
 # live as Rescue
 use/live/rescue: use/live use/grub/live-rescue.cfg use/syslinux/live-rescue.cfg
 	@$(call set,STAGE2_LIVE_RESCUE,yes)
-	@$(call add,LIVE_PACKAGES,livecd-rescue-utility)
-	@$(call add,LIVE_LISTS,tagged/base+rescue)
-ifeq (,$(filter-out x86_64,$(ARCH)))
-	@$(call add,LIVE_PACKAGES,pesign mokutil)
-endif
+	@$(call add,LIVE_PACKAGES,livecd-rescue)
+	@$(call add,LIVE_PACKAGES,livecd-rescue-base-utils)
 
 use/live/rescue/extra: use/live/rescue
 	@$(call add,LIVE_LISTS,\

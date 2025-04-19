@@ -82,8 +82,6 @@ f2fs-tools
 jfsprogs
 nilfs-utils
 mtd-utils
-reiser4progs
-reiserfsprogs
 shake
 xfsprogs
 open-iscsi
@@ -93,7 +91,6 @@ clicfs-utils
 squashfs-tools
 
 # Foreign filesystems
-afpfs-ng
 bindfs
 dosfstools
 exfatprogs
@@ -113,7 +110,6 @@ ftimes@X86
 fuse-convmvfs
 magicrescue
 photorec
-scalpel
 sleuthkit
 srm
 wipefreespace
@@ -174,7 +170,6 @@ tcpreen
 tcpreplay
 tcptrace
 tcputils
-tcpxtract
 telnet
 traceroute
 uucp

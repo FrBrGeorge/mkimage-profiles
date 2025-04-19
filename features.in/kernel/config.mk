@@ -7,9 +7,6 @@ else
 ifeq (,$(filter-out riscv64,$(ARCH)))
 	@$(call try,KFLAVOURS,un-def)
 else
-ifeq (,$(filter-out loongarch64,$(ARCH)))
-	@$(call try,KFLAVOURS,loongarch)
-else
 ifeq (,$(filter-out armh,$(ARCH)))
 	@$(call try,KFLAVOURS,mp)
 else
@@ -21,12 +18,13 @@ endif
 endif
 endif
 endif
-endif
 	@$(call xport,KFLAVOURS)
 
 # r8168 is a kludge, never install it by default
 use/kernel/net:
 	@$(call add,THE_KMODULES,r8125)
+	@$(call add,THE_KMODULES,yt6801)
+	@$(call add,STAGE1_KMODULES,yt6801)
 	@$(call add,MAIN_KMODULES,r8168 rtl8168)
 
 use/kernel/wireless: use/firmware/wireless
@@ -70,14 +68,11 @@ use/kernel/initrd-setup: use/kernel
 ifeq (,$(filter-out i586 x86_64,$(ARCH)))
 	@$(call add,VM_INITRDMODULES,ata_piix.ko)
 endif
-ifeq (,$(filter-out i586 x86_64 aarch64 armh e2k% ppc64le mipsel,$(ARCH)))
+ifeq (,$(filter-out i586 x86_64 aarch64 armh e2k% mipsel,$(ARCH)))
 	@$(call add,VM_INITRDFEATURES,usb)
 endif
 ifneq (,$(filter-out e2k% riscv64 mipsel,$(ARCH)))
 	@$(call add,VM_INITRDFEATURES,qemu)
-endif
-ifeq (,$(filter-out ppc64le,$(ARCH)))
-	@$(call add,VM_INITRDMODULES,ipr.ko ibmvscsi.ko)
 endif
 ifeq (,$(filter-out aarch64 armh riscv64,$(ARCH)))
 	@$(call add,VM_INITRDMODULES,drivers/dma drivers/reset)

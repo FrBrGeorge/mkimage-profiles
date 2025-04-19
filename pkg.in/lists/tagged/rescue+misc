@@ -1,5 +1,5 @@
 # Databases
-db4.8-utils
+db5.3-utils
 sqlite3
 
 # Office files
@@ -56,7 +56,6 @@ make-initrd-nfs
 
 # Filesystem archival tools
 fsarchiver
-wimtools@X86
 
 # Filesystem maintenance
 duff

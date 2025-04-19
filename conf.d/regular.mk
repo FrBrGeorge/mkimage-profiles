@@ -35,13 +35,12 @@ distro/.regular-x11: distro/.regular-base mixin/regular-x11 \
 	use/syslinux/ui/gfxboot use/grub/ui/gfxboot
 	@$(call add,THE_BRANDING,bootloader)
 	@$(call add,THE_LISTS,$(call tags,(base || desktop) && regular))
-	@$(call add,LIVE_LISTS,$(call tags,base rescue))
-	@$(call add,LIVE_PACKAGES,gpm)
+	@$(call add,LIVE_PACKAGES,livecd-rescue-base-utils)
 	@$(call add,MAIN_LISTS,kernel-headers)
 	@$(call add,DEFAULT_SERVICES_DISABLE,gpm powertop)
 
 # Network install
-ifeq (,$(filter-out i586 x86_64 aarch64 ppc64le riscv64 loongarch64,$(ARCH)))
+ifeq (,$(filter-out i586 x86_64 aarch64 riscv64 loongarch64,$(ARCH)))
 distro/regular-net-install: distro/grub-net-install; @:
 ifeq (sisyphus,$(BRANCH))
 ifeq (,$(filter-out i586 x86_64,$(ARCH)))
@@ -59,6 +58,7 @@ distro/.regular-wm: distro/.regular-x11 \
 	use/live-install/repo
 	@$(call set,GRUB_DEFAULT,live)
 	@$(call set,SYSLINUX_DEFAULT,live)
+	@$(call set,MAIN_KERNEL_SAVE,yes)
 ifeq (,$(filter-out i586 x86_64,$(ARCH)))
 	@$(call add,THE_PACKAGES,xorg-drv-vmware) # for virtualbox with VMSVGA
 endif
@@ -66,8 +66,12 @@ endif
 # DE base target
 # TODO: use/plymouth/live when luks+plymouth is done, see also #28255
 distro/.regular-desktop: distro/.regular-wm use/branding/full \
-	use/firmware/laptop +systemd +systemd-optimal +vmguest \
-	use/live-install/oem use/services/bluetooth-enable
+	use/firmware/laptop +systemd +vmguest \
+	use/live-install/oem use/services/bluetooth-enable \
+	use/live/rescue
+ifeq (,$(filter-out sisyphus p11,$(BRANCH)))
+	@$(call set,INSTALL2_INIT,systemd.unit=install2.target)
+endif
 	@$(call add,THE_PACKAGES,bluez)
 
 distro/.regular-gtk: distro/.regular-desktop use/x11/lightdm/gtk +plymouth; @:
@@ -81,11 +85,13 @@ distro/.regular-jeos-base: distro/.regular-bare +efi \
 	@$(call add,BASE_PACKAGES,installer-common-stage3)
 	@$(call add,LIVE_PACKAGES,alterator-net-functions) # for run scripts from installer-common-stage3
 	@$(call add,THE_PACKAGES,apt basesystem dhcpcd vim-console su agetty)
-	@$(call add,THE_PACKAGES,glibc-locales)
+	@$(call add,THE_PACKAGES,glibc-locales tzdata)
 	@$(call add,BASE_PACKAGES,make-initrd-lvm make-initrd-mdadm cpio)
 	@$(call add,BASE_LISTS,openssh)
 	@$(call add,THE_PACKAGES,fdisk)
 	@$(call add,THE_PACKAGES,btrfs-progs)
+	@$(call set,LOCALES,en_US ru_RU)
+	@$(call set,DISABLE_LANG_MENU,1)
 
 distro/.regular-jeos: distro/.regular-jeos-base use/cleanup \
 	use/volumes/regular use/ntp/chrony use/net/etcnet \
@@ -96,7 +102,11 @@ distro/.regular-jeos: distro/.regular-jeos-base use/cleanup \
 
 distro/regular-jeos-sysv: distro/.regular-jeos +sysvinit +power; @:
 
-distro/regular-jeos-systemd: distro/.regular-jeos +systemd +systemd-optimal; @:
+distro/regular-jeos-systemd: distro/.regular-jeos +systemd; @:
+ifeq (,$(filter-out sisyphus p11,$(BRANCH)))
+	@$(call set,INSTALL2_INIT,systemd.unit=install2.target)
+	@$(call add,LIVE_PACKAGES,livecd-net-eth)
+endif
 
 distro/regular-icewm: distro/.regular-desktop use/x11/lightdm/gtk \
 	mixin/regular-icewm
@@ -148,12 +158,14 @@ distro/regular-rescue: distro/.regular-base mixin/regular-rescue use/rescue/rw \
 	@$(call add,RESCUE_PACKAGES,gpm livecd-net-eth)
 	@$(call add,RESCUE_LISTS,$(call tags,network security))
 
-distro/regular-rescue-live: distro/.regular-base +systemd use/l10n \
+distro/regular-rescue-live: distro/.regular-base +systemd \
 	use/live/rescue/extra use/live/rescue/rw \
 	use/stage2/kms use/hdt use/firmware/full \
 	use/net-eth/networkd-dhcp use/net/networkd/resolved \
-	use/live/repo +wireless \
-	use/syslinux/sdab.cfg use/grub/sdab_bios.cfg
+	use/cleanup/live-no-cleanupdb use/live/repo +wireless \
+	use/syslinux/sdab.cfg use/grub/sdab_bios.cfg \
+	use/deflogin use/ntp/timesyncd
+	@$(call set,ROOTPW_EMPTY,1)
 	@$(call add,LIVE_LISTS,openssh)
 	@$(call add,LIVE_LISTS,$(call tags,network security))
 
@@ -187,7 +199,11 @@ distro/.regular-server-full: distro/.regular-server-managed \
 	@$(call add,BASE_KMODULES,staging)
 
 distro/regular-server-systemd: distro/.regular-server-full \
-	+systemd +systemd-optimal; @:
+	+systemd; @:
+ifeq (,$(filter-out sisyphus p11,$(BRANCH)))
+	@$(call set,INSTALL2_INIT,systemd.unit=install2.target)
+	@$(call add,LIVE_PACKAGES,livecd-net-eth)
+endif
 
 distro/regular-server-sysv: distro/.regular-server-full +sysvinit +power; @:
 
@@ -196,6 +212,7 @@ distro/.regular-builder: distro/.regular-base mixin/regular-builder \
 	use/live/base use/live/rw use/live/repo use/live/textinstall \
 	use/isohybrid use/syslinux/timeout/300 use/grub/timeout/30
 	@$(call add,THE_PACKAGES,ccache cifs-utils wodim)
+	@$(call set,LIVE_NAME,ALT Builder $(BRANCH) Live)
 
 distro/regular-builder: distro/.regular-builder +systemd \
 	use/dev/builder/live/systemd; @:
