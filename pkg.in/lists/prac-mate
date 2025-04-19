@@ -1,8 +1,6 @@
 sasm
 gcc
 nasm
-apt-scripts-nvidia
-nvidia_glx_common
 i586-libctf-nobfd0
 i586-libvtv0
 i586-libcrypt
