@@ -1,0 +1,6 @@
+OPTIONS=" \
+ --collector.diskstats.ignored-devices=^(ram|loop|fd|(h|s|v|xv)d[a-z]|nvmed+nd+p)d+\$ \
+ --collector.filesystem.ignored-mount-points=^/(sys|proc|dev|run|media|(opt|var/lib|mnt/space)/(docker|lxcfs))(\$|/) \
+ --collector.filesystem.ignored-fs-types=^(overlay|squashfs)\$ \
+ --collector.netclass.ignored-devices=^lo\$ \
+ --collector.textfile.directory=/var/lib/prometheus/node-exporter"

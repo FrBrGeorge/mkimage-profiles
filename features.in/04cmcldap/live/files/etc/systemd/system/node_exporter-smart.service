@@ -1,0 +1,7 @@
+[Unit]
+Description=Prometheus expoter for smart
+        
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/node_exporter-smart.sh
+StandardOutput=truncate:/var/lib/prometheus/node-exporter/smart.prom

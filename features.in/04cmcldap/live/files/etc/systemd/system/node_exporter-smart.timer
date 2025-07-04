@@ -1,0 +1,11 @@
+[Unit]
+Description=Prometheus expoter for $EXP
+
+[Timer]
+OnBootSec=1min
+OnCalendar=*:1/5
+Unit=node_exporter-smart.service
+
+[Install]
+WantedBy=multi-user.target
+
