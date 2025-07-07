@@ -3,3 +3,4 @@
 build
 image.in/files/*
 !image.in/files/.empty
+features.in/04cmcldap/live/image-scripts.d/40-config.sh
