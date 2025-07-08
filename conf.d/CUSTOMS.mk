@@ -6,7 +6,7 @@
 
 # make prac-mate.iso BRANCH=sisyphus
 distro/prac-mate: distro/.regular-gtk mixin/regular-mate \
-	use/deflogin/live use/04cmcldap use/03unroot ; @:
+	use/deflogin/live use/04cmcldap use/03unroot use/06mount ; @:
 	@$(call add,THE_LISTS,prac-mate)
 	@$(call add,THE_LISTS,prac-ldap)
 	@$(call add,CLEANUP_PACKAGES,sudo)
