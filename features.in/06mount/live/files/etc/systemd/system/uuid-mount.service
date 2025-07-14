@@ -1,0 +1,13 @@
+[Unit]
+Description=Mount various sources from /proc/cmdline option "mount="
+After=rpc-statd.service
+Before=remote-fs.target
+Requires=rpc-statd.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/uuidmount.sh
+
+[Install]
+WantedBy=multi-user.target
