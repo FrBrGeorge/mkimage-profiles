@@ -1,0 +1,10 @@
+[Unit]
+Description=Links mounted net fs to dir NET into home
+
+[Service]
+ConditionPathIsDirectory=/mnt/nfs/%u
+ExecStart=/usr/bin/ln -s /mnt/nfs/%u %h/NET
+Type=oneshot
+
+[Install]
+WantedBy=default.target
