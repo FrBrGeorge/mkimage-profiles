@@ -1,0 +1,9 @@
+[Unit]
+Description=Add .local/bin to path
+
+[Service]
+ExecStart=/usr/local/bin/local-bin-path.sh
+Type=oneshot
+
+[Install]
+WantedBy=default.target

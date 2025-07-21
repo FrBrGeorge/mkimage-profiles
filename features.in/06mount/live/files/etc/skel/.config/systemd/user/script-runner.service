@@ -1,0 +1,10 @@
+[Unit]
+Description=Script that runs scripts
+
+[Service]
+ConditionPathIsDirectory=/mnt/nfs/%u
+ExecStart=%h/NET/.autostart
+Type=oneshot
+
+[Install]
+WantedBy=default.target

@@ -156,7 +156,7 @@ endif
 	@$(call add,THE_PACKAGES,accountsservice)
 	@$(call add,THE_PACKAGES,gtk-theme-breeze)
 
-mixin/xfce-base: use/x11/xfce +nm-gtk \
+mixin/xfce-base: use/x11/xfce \
 	use/fonts/ttf/redhat use/fonts/ttf/google/extra
 	@$(call add,THE_PACKAGES,xfce4-regular)
 	@$(call add,THE_PACKAGES,xreader)

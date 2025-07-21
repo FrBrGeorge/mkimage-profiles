@@ -9,9 +9,9 @@ use/net: use/services use/pkgpriorities
 	@$(call set,THE_NET_SUBSYS,network-config-subsystem)
 	@$(call xport,TARGET_HOSTNAME)
 
-use/net/etcnet: use/net
-	@$(call set,THE_NET_SUBSYS,etcnet)
-	@$(call add,DEFAULT_SERVICES_ENABLE,network)
+#use/net/etcnet: use/net
+#	@$(call set,THE_NET_SUBSYS,etcnet)
+#	@$(call add,DEFAULT_SERVICES_ENABLE,network)
 
 use/net/ifupdown2: use/net
 	@$(call set,THE_NET_SUBSYS,ifupdown2)
