@@ -22,12 +22,12 @@ use/net/dhcp: use/net
 
 # base service, no GUI; see x11 feature for those
 use/net/nm: use/net
-	@$(call set,THE_NET_SUBSYS,NetworkManager)
-	@$(call add,THE_LISTS,network/NetworkManager)  # NB: won't get overridden
-	@$(call add,DEFAULT_SERVICES_ENABLE,network) # need for NM?
-	@$(call add,DEFAULT_SERVICES_ENABLE,NetworkManager ModemManager)
-	@$(call add,DEFAULT_SERVICES_ENABLE,livecd-save-nfs) # keep interface up
-	@$(call xport,NM_native)
+#	@$(call set,THE_NET_SUBSYS,NetworkManager)
+#	@$(call add,THE_LISTS,network/NetworkManager)  # NB: won't get overridden
+#	@$(call add,DEFAULT_SERVICES_ENABLE,network) # need for NM?
+#	@$(call add,DEFAULT_SERVICES_ENABLE,NetworkManager ModemManager)
+#	@$(call add,DEFAULT_SERVICES_ENABLE,livecd-save-nfs) # keep interface up
+#	@$(call xport,NM_native)
 
 # use NetworkManager(native)
 use/net/nm/native:
