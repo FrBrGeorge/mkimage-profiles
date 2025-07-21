@@ -1,0 +1,10 @@
+[Unit]
+Description=Replace localdomain with reverse DNS
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/replace-localdomain.sh
+
+[Install]
+WantedBy=multi-user.target
