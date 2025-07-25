@@ -1,0 +1,10 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=/home/altlinux/bin/VNCVIEWER
+Icon=tv_section
+Icon[ru_RU]=tv_section
+Name[ru_RU]=Демо-экран
+Name=Демо-экран

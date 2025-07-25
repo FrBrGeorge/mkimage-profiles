@@ -1,8 +1,8 @@
 [Unit]
 Description=Links mounted net fs to dir NET into home
+ConditionPathIsDirectory=/mnt/nfs/%u
 
 [Service]
-ConditionPathIsDirectory=/mnt/nfs/%u
 ExecStart=/usr/bin/ln -s /mnt/nfs/%u %h/NET
 Type=oneshot
 

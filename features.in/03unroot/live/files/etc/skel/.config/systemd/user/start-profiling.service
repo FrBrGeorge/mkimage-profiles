@@ -1,0 +1,12 @@
+[Unit]
+Description=Link files from nfs NET to user's home
+After=default.target
+ConditionPathExists=/mnt/nfs/%u
+
+[Service]
+ExecStart=/usr/local/bin/start-profiling.sh
+Type=oneshot
+RemainAfterExit=no
+
+[Install]
+WantedBy=default.target

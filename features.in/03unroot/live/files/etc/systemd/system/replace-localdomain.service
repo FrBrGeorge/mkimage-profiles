@@ -1,6 +1,8 @@
 [Unit]
-Description=Replace localdomain with reverse DNS
-After=network.target
+Description=Replace localdomain with reverse dig -x result
+Wants=network-online.target
+After=network-online.target
+Before=default.target
 
 [Service]
 Type=oneshot
