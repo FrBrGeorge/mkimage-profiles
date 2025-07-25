@@ -1,41 +1,33 @@
 #!/bin/bash
 BACKUP_DIR="$HOME/NET/.BACKUP"
-LIST_FILE="$HOME/NET/.BACKUP/.save_file"
 
 DEFAULT_FILES=(
-    ".bashrc"
-    ".bash_profile"
-    ".xprofile"
-    ".profile"
-    ".ssh/"
-    ".gitconfig"
+	".vimrc"
+	".ssh/"
+	".gitconfig"
 )
 
-if [ -f "$LIST_FILE" ]; then
-    mapfile -t FILES_TO_BACKUP < "$LIST_FILE"
-else
-    FILES_TO_BACKUP=("${DEFAULT_FILES[@]}")
-fi
-
-for item in "${FILES_TO_BACKUP[@]}"; do
-    TARGET_PATH="$BACKUP_DIR/$item"
-    if [[ "$item" == */ ]]; then
-	    if [ ! -d "$TARGET_PATH" ]; then
-	    	mkdir -p "$TARGET_PATH"
-		if [ "$item" == ".ssh/" ]; then
-			chmod 700 "$TARGET_PATH"
+for file in "${DEFAULT_FILES[@]}"; do
+	if [ ! -e "$BACKUP_DIR/$file" ]; then
+		if [ "$file" == ".ssh/" ]; then
+			mkdir -p "$BACKUP_DIR/$file"
+			chmod 700 "$BACKUP_DIR/$file"
+		else
+			touch "$BACKUP_DIR/$file"
 		fi
-	    fi
-    	    rm -rf "$HOME/$item"
-    	    ln -s "$TARGET_PATH" "$HOME"
-    else
-	    mkdir -p "$(dirname "$")"
-	    if [ ! -f "$TARGET_PATH" ]; then
-	    	cp -a "/etc/skel/$item" "$TARGET_PATH"
-	    fi
-    	    rm -rf "$HOME/$item"
-       	    ln -s "$TARGET_PATH" "$HOME/$item"
-    fi
+	fi
 done
 
+find "$BACKUP_DIR" -maxdepth 1 | while read -r item; do
+	file=$(basename $item)
+	if [ -d "$item" ]; then
+		rm -rf "$HOME/$file"
+		ln -s "$item" "$HOME"
+	fi
+	if [ -f "$item" ]; then
+		rm -rf "$HOME/$file"
+		ln -s "$item" "$HOME/$file"
+		echo "dir $item $file"
+	fi
+done
 exit 0
