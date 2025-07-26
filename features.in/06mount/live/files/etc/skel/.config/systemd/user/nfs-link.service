@@ -1,6 +1,7 @@
 [Unit]
 Description=Links mounted net fs to dir NET into home
 ConditionPathIsDirectory=/mnt/nfs/%u
+ConditionPathIsSymbolicLink=!%h/NET
 
 [Service]
 ExecStart=/usr/bin/ln -s /mnt/nfs/%u %h/NET
