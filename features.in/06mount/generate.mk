@@ -11,7 +11,7 @@
 include $(BUILDDIR)/distcfg.mk
 
 ifeq (,$(06NPL))
-	$(warning this is a "mount UUID:mountpoint" feature, who might want to include it? :D )
+$(warning this is a "mount UUID:mountpoint" feature, who might want to include it? :D )
 endif
 
 all:

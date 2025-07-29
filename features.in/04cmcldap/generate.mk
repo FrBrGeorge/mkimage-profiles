@@ -11,7 +11,7 @@
 include $(BUILDDIR)/distcfg.mk
 
 ifeq (,$(04NPL))
-	$(warning this is a "cmc msu LDAP auth" feature, who might want to include it? :p )
+$(warning this is a "cmc msu LDAP auth" feature, who might want to include it? :p )
 endif
 
 all:

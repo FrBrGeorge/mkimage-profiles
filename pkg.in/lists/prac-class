@@ -1,0 +1,46 @@
+# libs
+bc
+libncursesw
+
+# progs for linux development
+xterm
+dialog
+make
+zsh
+mktemp
+grep
+sed
+termutils
+file
+gdb
+gdbgui
+strace
+pkg-config
+gettext
+intltool
+diffutils
+git
+libtool
+check
+hasher
+
+# progs for python prac
+pip
+qgit
+cowsay
+meld
+patch
+
+# more
+autoconf
+automake
+cmake
+doxygen
+glibc
+graphviz
+libncurses
+libpcre16
+meson
+ninja-build
+geany
+vim

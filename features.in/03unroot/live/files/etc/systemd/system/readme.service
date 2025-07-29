@@ -1,0 +1,10 @@
+[Unit]
+Description=makes README from /usr/share/doc/FEATURES/*.md
+Before=default.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/readme.sh
+
+[Install]
+WantedBy=multi-user.target

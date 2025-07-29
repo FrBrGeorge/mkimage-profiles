@@ -4,7 +4,7 @@ After=default.target
 ConditionPathExists=/mnt/nfs/%u
 
 [Service]
-ExecStart=/usr/local/bin/start-profiling.sh
+ExecStart=/usr/local/bin/net-backup.sh
 Type=oneshot
 RemainAfterExit=no
 
