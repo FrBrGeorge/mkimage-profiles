@@ -1,0 +1,6 @@
+[Desktop Entry]
+Icon=/usr/share/icons/hicolor/scalable/status/video-display.svg
+Name=VNCVIEWER
+Exec="/usr/bin/vncviewer"
+Terminal=false
+Type=Application

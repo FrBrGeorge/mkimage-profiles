@@ -1,0 +1,6 @@
+[Desktop Entry]
+Icon=/usr/share/icons/hicolor/scalable/status/computer.svg
+Name=VNCSERVER
+Exec="/usr/bin/vncserver"
+Terminal=true
+Type=Application

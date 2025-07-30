@@ -10,7 +10,7 @@
 
 # make prac-xfce.iso BRANCH=sisyphus
 distro/prac-xfce: distro/.regular-gtk mixin/regular-xfce \
-	use/03unroot use/04cmcldap use/06mount ; @:
+	use/03unroot use/04cmcldap use/06mount; @:
 	@$(call add,DEFAULT_SYSTEMD_SERVICES_ENABLE,sshd)
 	@$(call add,DEFAULT_SERVICES_ENABLE,rpc.statd)
 	@$(call add,DEFAULT_SERVICES_ENABLE,nscd)
@@ -24,6 +24,7 @@ distro/prac-xfce: distro/.regular-gtk mixin/regular-xfce \
 	@$(call add,SYSTEMD_SERVICES_ENABLE,readme.service)
 	@$(call add,DEFAULT_SERVICES_ENABLE,readme.service)
 	@$(call add,CLEANUP_PACKAGES,sudo)
+	@$(call add,CLEANUP_PACKAGES,chromium)
 	@$(call add,CLEANUP_PACKAGES,etcnet)
 	@$(call add,THE_LISTS,prac-asm)
 	@$(call add,THE_LISTS,prac-class)

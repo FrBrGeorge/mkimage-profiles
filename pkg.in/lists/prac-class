@@ -44,3 +44,25 @@ meson
 ninja-build
 geany
 vim
+
+#списокпакетов ACBK Prac
+gcc-c++
+xxdiff
+valgrind
+gdbserver
+seer
+ltrace
+libncursesw-devel
+libpcre-devel
+autoconf-archive
+vim-X11-gtk3
+vim-plugin-ale
+vim-plugin-spec_alt-ftplugin
+vim-spell-ru-lebedev-io
+vim-spell-ru
+vim-plugin-moin-syntax
+python3-tools
+python3-modules-sqlite3
+
+vncshare
+firefox

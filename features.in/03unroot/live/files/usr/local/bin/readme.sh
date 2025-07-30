@@ -18,4 +18,4 @@ for file in $DOC_PATH/*.md; do
 	cat "$file" >> "$OUTPUT_FILE"
 done
 
-echo "\n## $SEPARATOR Конец $SEPARATOR ##" >> "$OUTPUT_FILE"
+echo -e "\n## $SEPARATOR Конец $SEPARATOR ##" >> "$OUTPUT_FILE"

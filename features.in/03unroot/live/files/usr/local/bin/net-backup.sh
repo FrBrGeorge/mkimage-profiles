@@ -20,14 +20,9 @@ for file in "${DEFAULT_FILES[@]}"; do
 done
 
 # заменяем файлы из домашней директории на ссылки на соответствующие файлы из $BACKUP_DIR
-find $BACKUP_DIR -readable \( \! -perm /4 -print -prune -o -type f -printf '%P\n' \) | while read -r item; do
+find $BACKUP_DIR -readable \( \! -perm /4 -printf '%P\n' -prune -o -type f,l -printf '%P\n' \) | while read -r item; do
 	mkdir -p "$HOME/$(dirname $item)"
 	rm -rf "$HOME/$item"
-	if [ -d "$BACKUP_DIR/$item" ]; then
-		ln -s "$BACKUP_DIR/$item" "$HOME"
-	fi
-	if [ -f "$BACKUP_DIR/$item" ]; then
-		ln -s "$BACKUP_DIR/$item" "$HOME/$item"
-	fi
+	ln -s "$BACKUP_DIR/$item" "$HOME/$item"
 done
 exit 0
