@@ -1,6 +1,0 @@
-[Desktop Entry]
-Icon=/usr/share/icons/hicolor/scalable/apps/org.xfce.webbrowser.svg
-Name=Firefox
-Exec="firefox"
-Terminal=false
-Type=Application

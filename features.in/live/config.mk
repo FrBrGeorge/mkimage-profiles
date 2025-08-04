@@ -40,8 +40,8 @@ endif
 use/live/rw: use/live use/syslinux/live_rw.cfg use/grub/live_rw.cfg; @:
 
 # graphical target (not enforcing xorg drivers or blobs)
-use/live/x11: use/live/base use/deflogin/desktop \
-	use/sound use/l10n
+use/live/x11: use/live/base use/deflogin/desktop use/sound \
+	use/fonts/otf/adobe use/fonts/otf/mozilla +efi
 	@$(call add,LIVE_LISTS,$(call tags,desktop && (live || network)))
 	@$(call add,LIVE_LISTS,$(call tags,base l10n))
 	@$(call add,LIVE_PACKAGES,pciutils)
